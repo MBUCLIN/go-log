@@ -11,9 +11,9 @@
 
 ### Varsion 0.1 - Log data 
 
- - Map useful log options.                                                     | 
- - Structurize data model for log.                                             | 
- - Structurize data model for log option.                                      | 
+ - Map useful log options.                                                     | OK
+ - Structurize data model for log.                                             | OK
+ - Structurize data model for log option.                                      | OK
 
 
 ### Version 0.2 - Log options 
