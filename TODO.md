@@ -18,8 +18,8 @@
 
 ### Version 0.2 - Log options 
 
- - Implement log option tests.                                                 | 
- - Implement log option obvious log option methods.                            | 
+ - Implement log option tests.                                                 | OK
+ - Implement log option obvious log option methods.                            | OK
 
 
 ### Version 0.3 - Log 
