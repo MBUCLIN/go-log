@@ -5,13 +5,14 @@ import (
 )
 
 // Does not really test anything, just test build.
-func  LogOptionTest(t *testing.T) {
+func  TestLogOption(t *testing.T) {
   t.Run("LO=Struct", func(t *testing.T) {
     var option LogOption = LogOption{
       "Info",
       false,
       false,
       true,
+      false,
       false,
     };
 

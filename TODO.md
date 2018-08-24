@@ -11,15 +11,15 @@
 
 ### Varsion 0.1 - Log data 
 
- - Map useful log options.                                                     | OK
- - Structurize data model for log.                                             | OK
- - Structurize data model for log option.                                      | OK
+ - Map useful log options.                                                     | OK 
+ - Structurize data model for log.                                             | OK 
+ - Structurize data model for log option.                                      | OK 
 
 
 ### Version 0.2 - Log options 
 
- - Implement log option tests.                                                 | OK
- - Implement log option obvious log option methods.                            | OK
+ - Implement log option tests.                                                 | OK 
+ - Implement log option obvious log option methods.                            | OK 
 
 
 ### Version 0.3 - Log 
