@@ -11,5 +11,5 @@ type LogChain struct {
   // The current log that the log chain uses.
   current     Log
   // The default options for every nodes.
-  option      LogOPtion
+  option      LogOption
 }

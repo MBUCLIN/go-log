@@ -11,5 +11,5 @@ type Log struct {
   // log node level option.
   option    LogOption
   // next log of the chain.
-  next      *log
+  next      *Log
 }
