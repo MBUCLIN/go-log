@@ -23,3 +23,24 @@ type LogOption struct {
   // All following logs will have the same options: except for Keep that can be changed at will.
   Strict        bool
 }
+
+// Create a new Option and set the option level default values.
+func  newOption() (*LogOption) {
+  var option *LogOption = new(LogOption);
+
+  option.Level = defaultLevel;
+  option.Time = defaultTime;
+  option.Color = defaultColor;
+  option.Keep = defaultKeep;
+  option.Strict = defaultStrict;
+  return option;
+}
+
+// Create a new LogOption and set it's level and is the log node is kept.
+func  NewLogOption(level string, keep bool) (*LogOption) {
+  var option *LogOption = newOption();
+
+  option.Level = level;
+  option.Keep = keep;
+  return option;
+}
