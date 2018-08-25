@@ -36,9 +36,9 @@
 
 ### Version 0.5 - Log file data 
 
- - Map log file options.                                                       | 
- - Structurize data model for log file.                                        | 
- - Structurize data model for log file options.                                |
+ - Map log file options.                                                       | OK
+ - Structurize data model for log file.                                        | OK
+ - Structurize data model for log file options.                                | OK
 
 
 ### Version 0.6 - Log file option 
