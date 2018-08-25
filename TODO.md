@@ -24,14 +24,14 @@
 
 ### Version 0.3 - Log 
 
- - Implement log tests.                                                        | 
- - Implement log obvious methods.                                              | 
+ - Implement log tests.                                                        | OK
+ - Implement log obvious methods.                                              | OK
 
 
 ### Version 0.4 - Log (final) 
 
- - Add and correct log and it's options details and there tests.               | 
- - `log.go` v1.0.                                                              | 
+ - Add and correct log and it's options details and there tests.               | OK
+ - `log.go` v1.0.                                                              | OK
 
 
 ### Version 0.5 - Log file data 
