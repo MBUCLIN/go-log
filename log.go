@@ -11,8 +11,41 @@ type Log struct {
   Error     error
   // log node level option.
   option    *LogOption
+  // number of bytes readed from the log.
+  byteread  int
   // next log of the chain.
   next      *Log
+}
+
+func  (l *Log) ResetReader() {
+  l.byteread = 0;
+}
+
+func  (l *Log) Logify() ([]byte) {
+  var logstr = l.GetLevel() + ": " + l.GetMessage() + "\n";
+
+  return []byte(logstr);
+}
+
+// Read a log.
+func  (l *Log) Read(buffer []byte) (int, error) {
+  var bufsize int = len(buffer);
+  var log []byte = l.Logify();
+  var length = bufsize;
+  var sublog []byte = log[l.byteread:];
+
+  // set buffer writing length.
+  if len(sublog) < bufsize {
+    length = len(sublog);
+  }
+  for i := 0; i < length; i++ {
+    buffer[i] = sublog[i];
+  }
+  l.byteread += length;
+  if l.byteread == len(log) {
+    return length, errors.New("EOF");
+  }
+  return length, nil;
 }
 
 // Set the last log
@@ -29,6 +62,7 @@ func  (l *Log) Add(next *Log) {
 func  (l *Log) Next() (*Log, error) {
   var err error = nil;
 
+  l.byteread = 0;
   if l.next == nil {
     err = errors.New("EOF");
   }
@@ -59,6 +93,7 @@ func  newLog(message error, option *LogOption) (*Log) {
   log.next = nil;
   log.option = option;
   log.Error = message;
+  log.byteread = 0;
   return log;
 }
 

@@ -3,6 +3,7 @@ package golog
 import (
   "testing"
   "errors"
+  "bytes"
 )
 
 func  TestLog(t *testing.T) {
@@ -10,9 +11,10 @@ func  TestLog(t *testing.T) {
     var log Log = Log{
       errors.New("YOLO"),
       nil,
+      0,
       nil,
     };
-    t.Logf("option: %v\n", log);
+    t.Logf("log: %v\n", log);
   });
 }
 
@@ -106,6 +108,36 @@ func  TestNext(t *testing.T) {
         t.Failed();
       }
       tmp, _ = tmp.Next();
+    }
+  });
+}
+
+func  TestRead(t *testing.T) {
+  var log = NewLogString("Info", "This is my message", NewLogOption("Info", false));
+  var bufsize []int = []int{
+    1, 16, 128,
+  };
+  t.Run("L=Read", func(t *testing.T) {
+
+    for i := 0; i < len(bufsize); i++ {
+      var content []byte = []byte(nil);
+      log.ResetReader();
+      for {
+        buf := make([]byte, bufsize[i]);
+        n, err := log.Read(buf);
+        content = append(content, buf[:n]...);
+        if err != nil {
+          if err.Error() != "EOF" {
+            t.Errorf("L=Read: Fail: Unexpected error: %s\n", err.Error());
+            t.Failed();
+          }
+          break ;
+        }
+      }
+      if bytes.Equal(content, log.Logify()) != true {
+        t.Errorf("L=Read: Fail: content: %s\nexpect: %s\n", string(content), string(log.Logify()));
+        t.Failed();
+      }
     }
   });
 }
