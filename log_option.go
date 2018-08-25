@@ -10,7 +10,7 @@ const defaultColor = false;
 const defaultKeep = false;
 const defaultStrict = false;
 
-// Data structure for logs options, define the behaviour of the log or log chain. 
+// Data structure for logs options, define the behaviour of the log. 
 type LogOption struct {
   // Default level for the log.
   Level             string
@@ -20,10 +20,8 @@ type LogOption struct {
   Color             bool
   // The log will be kept instead of destroyed from chain uppon writting.
   Keep              bool
-  // All following logs will have the same options: except for Keep, Level that can be changed at will.
-  Strict            bool
-  // This option is for chain, it forces option duplication.
-  duplicate         bool
+  // If the log has been kept, we don't want to rewrite it later on.
+  written           bool
 }
 
 // Create a new Option and set the option level default values.
@@ -34,7 +32,7 @@ func  newOption() (*LogOption) {
   option.Time = defaultTime;
   option.Color = defaultColor;
   option.Keep = defaultKeep;
-  option.Strict = defaultStrict;
+  option.written = false;
   return option;
 }
 
@@ -45,4 +43,50 @@ func  NewLogOption(level string, keep bool) (*LogOption) {
   option.Level = level;
   option.Keep = keep;
   return option;
+}
+
+// Duplicate an option.
+func  (lo *LogOption) Duplicate() (*LogOption) {
+  option := new(LogOption);
+
+  option.Level = lo.Level;
+  option.Time = lo.Time;
+  option.Color = lo.Color;
+  option.Keep = lo.Keep;
+  return option;
+}
+
+// Data structure for log chain option, define the behavior for a log chain.
+type LogChainOption struct {
+  // Enable the strict mode
+  // The whole chain uses the same option instance.
+  // Except for kept records when the shared option Keep value is false.
+  strict          bool
+  // The default / shared option instance.
+  // If strict mode is false and no option is specified for the new log, this option is duplicated.
+  option          *LogOption
+}
+
+// Create the LogChain option.
+func  newLogChainOption(strictmode bool, option *LogOption) (*LogChainOption) {
+  var lc_option *LogChainOption = new(LogChainOption);
+
+  lc_option.strict = strictmode;
+  lc_option.option = option;
+  return lc_option;
+}
+
+// Display log with time.
+func  (lco *LogChainOption) SetTime() {
+  lco.option.Time = true;
+}
+
+// Add colors to logs.
+func  (lco *LogChainOption) SetColor() {
+  lco.option.Color = true;
+}
+
+// Set keep on the log chain option.
+func  (lco *LogChainOption) SetKeep() {
+  lco.option.Keep = true;
 }

@@ -13,7 +13,6 @@ func  TestLogOption(t *testing.T) {
       false,
       true,
       false,
-      false,
     };
 
     t.Logf("option: %v\n", option);
