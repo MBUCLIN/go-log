@@ -1,8 +1,13 @@
 package golog
 
 import (
+  "os"
 )
 
+/*
+** This part is for a log option.
+** The options that are log relative.
+*/
 
 const defaultLevel = "Info";
 const defaultTime = false;
@@ -56,6 +61,11 @@ func  (lo *LogOption) Duplicate() (*LogOption) {
   return option;
 }
 
+/*
+** From this point, we are in the log chain options.
+** The options that define the log chain behavior.
+*/
+
 // Data structure for log chain option, define the behavior for a log chain.
 type LogChainOption struct {
   // Enable the strict mode
@@ -72,21 +82,54 @@ func  newLogChainOption(strictmode bool, option *LogOption) (*LogChainOption) {
   var lc_option *LogChainOption = new(LogChainOption);
 
   lc_option.strict = strictmode;
+  if option == nil {
+    option = newOption();
+  }
   lc_option.option = option;
   return lc_option;
 }
 
-// Display log with time.
-func  (lco *LogChainOption) SetTime() {
-  lco.option.Time = true;
+// Set time mode
+func  (lco *LogChainOption) SetTime(v bool) {
+  lco.option.Time = v;
 }
 
-// Add colors to logs.
-func  (lco *LogChainOption) SetColor() {
-  lco.option.Color = true;
+// Set color mode
+func  (lco *LogChainOption) SetColor(v bool) {
+  lco.option.Color = v;
 }
 
-// Set keep on the log chain option.
-func  (lco *LogChainOption) SetKeep() {
-  lco.option.Keep = true;
+// Set keep mode
+func  (lco *LogChainOption) SetKeep(v bool) {
+  lco.option.Keep = v;
+}
+
+// return strict mode
+func  (lco *LogChainOption) IsStrict() (bool) {
+  return lco.strict;
+}
+// return keep mode
+func  (lco *LogChainOption) IsKept() (bool) {
+  return lco.option.Keep;
+}
+
+/*
+** Here is the log file options.
+** defining the log file behavior.
+*/
+
+// Define the log file manager behavior.
+type  LogFileOption struct {
+  // Delete log nodes uppon writting.
+  clearOnWrite      bool
+  // Only one chain is used for all types.
+  OneChainMode      bool
+  // the open option
+  FileOption        int
+  // the file permission
+  FilePerm          os.FileMode
+  // mapping of log filenames
+  FileLevel         map[string]string
+  // chains default options.
+  option            *LogChainOption
 }
